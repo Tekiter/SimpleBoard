@@ -17,7 +17,8 @@ module.exports = function (router) {
 
             let user = new User({
                 username: args.username,
-                
+                email: args.email,
+                password: args.password
             })
 
             user.save()      
