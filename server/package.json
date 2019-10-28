@@ -3,7 +3,8 @@
   "version": "1.0.0",
   "description": "Just a simple board",
   "scripts": {
-    "start": "node index.js"
+    "start": "node index.js",
+    "serve": "supervisor index.js"
   },
   "main": "index.js",
   "repository": "https://github.com/Tekiter/SimpleBoard.git",
