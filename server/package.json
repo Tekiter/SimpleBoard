@@ -3,9 +3,9 @@
   "version": "1.0.0",
   "description": "Just a simple board",
   "scripts": {
-    "start": "node app.js"
+    "start": "node index.js"
   },
-  "main": "app.js",
+  "main": "index.js",
   "repository": "https://github.com/Tekiter/SimpleBoard.git",
   "author": "Tekiter <tekiter8@gmail.com>",
   "license": "MIT",
