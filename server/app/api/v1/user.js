@@ -1,7 +1,18 @@
 const userModel = require.main.require('./app/model/user')
 
+module.exports = function (router) {
 
-
-exports.register = function (req, res) {
-    res.json(res.body.username)
+    router.post('/user', function (req, res) {
+    
+        args = req.body
+    
+        if (args.username && args.password && args.nickname && args.email) {
+    
+        }
+        else {
+            res.status(400).send({"message": ""})
+        }
+    
+        
+    })
 }

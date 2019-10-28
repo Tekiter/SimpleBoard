@@ -1,13 +1,21 @@
 const express = require('express')
-
+const mongoose = require('mongoose')
 
 const app = express()
 
 
+// MongoDB 설정
+const db = mongoose.connection
+db.on('error', console.error)
+db.once('open', function () {
+    console.log("Successfully connected to Mongo")
+})
+
+mongoose.connect('mongodb://localhost:27017/simpleboard', { useNewUrlParser: true, useUnifiedTopology: true })
+
 
 app.use(express.json())
 // app.use(express.urlencoded({ extended: true }))
-
 
 // 기본 라우팅 설정
 app.use('/', require('./router'))

@@ -1,10 +1,12 @@
 
 
-exports.login = function (req, res) {
-    res.send('LOGGING IN!')
-}
+module.exports = function (router) {
 
+    router.post('/login', function (req, res) {
+        res.send('LOGGING IN!')
+    })
 
-exports.logout = function (req, res) {
-    res.send('LOGGING OUT!')
+    router.delete('/login', function (req, res) {
+        res.send('LOGGING OUT!')
+    })
 }
