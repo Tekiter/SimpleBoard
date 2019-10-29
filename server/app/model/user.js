@@ -25,7 +25,7 @@ const userSchema = new mongoose.Schema({
         trim: true,
         required: true
     },
-    permissionLevel: { type: Number, default: 1 },
+    permission_level: { type: Number, default: 1 },
     registered_date: { type: Date, default: Date.now }
 })
 
