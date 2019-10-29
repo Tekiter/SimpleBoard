@@ -1,6 +1,8 @@
 const express = require('express')
 const mongoose = require('mongoose')
 
+require('dotenv').config()
+
 const app = express()
 
 
@@ -11,7 +13,7 @@ db.once('open', function () {
     console.log("Successfully connected to Mongo")
 })
 
-mongoose.connect('mongodb://localhost:27017/simpleboard', { useNewUrlParser: true, useUnifiedTopology: true })
+mongoose.connect(process.env.DB_URI, { useNewUrlParser: true, useUnifiedTopology: true })
 
 
 app.use(express.json())

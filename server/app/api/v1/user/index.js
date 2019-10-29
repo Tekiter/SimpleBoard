@@ -1,6 +1,7 @@
 const User = require.main.require('./app/model/user')
 const { check, validationResult } = require('express-validator');
 const { validateJson } = require.main.require('./app/util/api')
+const { loginRequired, adminRequired } = require.main.require('./app/util/session')
 
 module.exports = function (router) {
 
@@ -26,5 +27,9 @@ module.exports = function (router) {
 
             res.send("1234")
         }
+    })
+
+    router.get('/user', adminRequired, function (req, res) {
+        res.send("authed")
     })
 }
