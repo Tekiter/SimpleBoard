@@ -9,10 +9,23 @@ const userSchema = new mongoose.Schema({
         trim: true,
         unique: true
     },
-    password_hash: String,
-    nickname: String,
-    email: String,
-    permissionLevel: Number,
+    password_hash: {
+        type: String,
+        required: true,
+    },
+    nickname: {
+        type: String,
+        required: true,
+        trim: true
+    },
+    email: {
+        type: String,
+        unique: true,
+        lowercase: true,
+        trim: true,
+        required: true
+    },
+    permissionLevel: { type: Number, default: 1 },
     registered_date: { type: Date, default: Date.now }
 })
 
@@ -30,6 +43,10 @@ userSchema.virtual('password')
 //       return next();
 //     }
 // });
+
+userSchema.methods.checkPassword = function (password) {
+    return bcrypt.compareSync(password, this.password_hash)
+}
 
 
 module.exports = mongoose.model('user', userSchema)
