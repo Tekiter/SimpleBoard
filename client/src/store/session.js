@@ -14,7 +14,7 @@ export default {
     },
     actions: {
         initialize(context) {
-            let accessToken = localStorage.getItem('accessToken')
+            let accessToken = localStorage.getItem('access_token')
             context.commit('SET_ACCESS_TOKEN', accessToken)
         },
         async login(context, {username, password}) {
@@ -24,8 +24,9 @@ export default {
                     baseURL: session.apiURL
                 })
     
-                if (res.access_token) {
-                    context.commit('SET_ACCESS_TOKEN', res.access_token)
+                if (res.data.access_token) {
+                    localStorage.setItem('access_token', res.data.access_token)
+                    context.commit('SET_ACCESS_TOKEN', res.data.access_token)
                     return
                 }
                 throw res
