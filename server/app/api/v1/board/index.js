@@ -23,6 +23,7 @@ module.exports = function (router) {
         })
     })
 
+
     router.post('/board', [
         adminRequired,
         check('name').isString()
@@ -44,6 +45,7 @@ module.exports = function (router) {
         })
     })
 
+
     router.get('/board/:board_id', [
 
     ], function (req, res) {
@@ -54,11 +56,11 @@ module.exports = function (router) {
             res.json(board)
         })
         .catch((err) => {
-            console.log(err)
-            res.json({message:"???"})
+            res.status(503).json({ message: "database error" })
         })
 
     })
+
 
     router.post('/board/:board_id', [
         loginRequired,
@@ -88,12 +90,11 @@ module.exports = function (router) {
                 res.status(201).json(newpost)
             })
             .catch((err) => {
-                console.log(err)
                 res.status(503).json(err)
             })
         })
         .catch((err) => {
-            // res.status(404).json(err)
+            
             
             res.status(404).json({message:"no board id "+boardId})
         })
