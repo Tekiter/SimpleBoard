@@ -1,6 +1,9 @@
 const express = require('express')
 const mongoose = require('mongoose')
+
 const autoIncrement = require('mongoose-auto-increment')
+const cors = require('cors')
+
 
 require('dotenv').config()
 
@@ -17,6 +20,8 @@ db.once('open', function () {
 mongoose.connect(process.env.DB_URI, { useNewUrlParser: true, useUnifiedTopology: true })
 
 autoIncrement.initialize(mongoose.connection)
+
+app.use(cors())
 
 app.use(express.json())
 // app.use(express.urlencoded({ extended: true }))
