@@ -120,7 +120,30 @@ module.exports = function (router) {
         Post.findOne()
         .where('_id').equals(req.params.post_id)
         .then((post) => {
-            res.status(200).json(post)
+            if (post) {
+                res.status(200).json(post)
+            }
+            else {
+                res.status(404).json({message: "no post id " + req.params.post_id})
+            }
         })
     })
+
+
+    // router.post('/post/:post_id/comment', [
+    //     check('post_id').isNumeric(),
+    //     check('content').isString(),
+    //     validateParams
+    // ], function (req, res) {
+    //     Post.findOne()
+    //     .where('_id').equals(req.params.post_id)
+    //     .then((post) => {
+    //         if (!post) {
+    //             res.status(404).json({message:"no post id " + req.params.post_id})
+    //             return
+    //         }
+
+            
+    //     })
+    // })
 }
