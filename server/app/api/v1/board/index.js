@@ -77,7 +77,7 @@ module.exports = function (router) {
 
 
     router.post('/board/:board_id', [
-        loginRequired,
+        adminRequired,
         param('board_id').isNumeric(),
         body('title').isString(),
         body('content').isString(),
@@ -113,6 +113,27 @@ module.exports = function (router) {
     })
 
 
+    router.delete('/board/:board_id', [
+        adminRequired,
+        param('board_id').isNumeric(),
+        validateParams
+    ], function (req, res) {
+        Board.findById(req.params.board_id)
+        .then((board) => {
+            if (board) {
+                board.remove()
+                .then(() => {
+                    res.status(200).json({message: "board deleted", target: board})
+                })
+            }
+            else {
+                res.status(404).json({message: "no board id " + req.params.post_id})
+            }
+        })
+        .catch(databaseErrorMessage(res))
+    })
+
+
     router.get('/post/:post_id', [
         param('post_id').isNumeric(),
         validateParams
@@ -127,6 +148,34 @@ module.exports = function (router) {
                 res.status(404).json({message: "no post id " + req.params.post_id})
             }
         })
+    })
+
+    
+    router.delete('/post/:post_id', [
+        loginRequired,
+        param('post_id').isNumeric(),
+        validateParams
+    ], function (req, res) {
+        Post.findById(req.params.post_id)
+        .then((post) => {
+            if (post) {
+                if (post.writer == req.user.username || req.user.isAdmin) {
+                    post.delete()
+                    .then(() => {
+                        res.status(200).json({message: "post deleted", target: post})
+
+                    })
+                    .catch(databaseErrorMessage(res))
+                }
+                else {
+                    res.status(403).json({message: "you have no permission to remove this post"})
+                }
+            }
+            else {
+                res.status(404).json({message: "no post id " + req.params.post_id})
+            }
+        })
+        .catch(databaseErrorMessage(res))
     })
 
 

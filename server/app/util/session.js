@@ -1,5 +1,6 @@
 const jwt = require('jsonwebtoken')
 
+const admin_permission = 100
 
 module.exports = {
     createToken(user) {
@@ -29,6 +30,7 @@ module.exports = {
                 module.exports.checkToken(splittoken[1])
                 .then(function (decoded) {
                     req.user = decoded
+                    req.user.isAdmin = (req.user.permission_level >= admin_permission)
                     next()
                 })
                 .catch(function (err) {
@@ -42,7 +44,7 @@ module.exports = {
     adminRequired(req, res, next) {
 
         module.exports.loginRequired(req, res, function() {
-            if (req.user.permission_level < 100) {
+            if (req.user.permission_level < admin_permission) {
                 res.status(403).json({"message": "admin permission required"})
             }
             else {
