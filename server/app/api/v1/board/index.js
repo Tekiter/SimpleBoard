@@ -113,6 +113,30 @@ module.exports = function (router) {
     })
 
 
+    router.patch('/board/:board_id', [
+        adminRequired,
+        param('board_id').isNumeric(),
+        body('name').isString(),
+        validateParams
+    ], function (req, res) {
+        Board.findById(req.params.board_id)
+        .then((board) => {
+            if (board) {
+                board.name = req.body.name
+                board.save()
+                .then(() => {
+                    res.status(200).json({message: "board info edited", target: board})
+                })
+                .catch(databaseErrorMessage(res))
+            }
+            else {
+                res.status(404).json({message: "no board id " + req.params.board_id})
+            }
+        })
+        .catch(databaseErrorMessage(res))
+    })
+
+
     router.delete('/board/:board_id', [
         adminRequired,
         param('board_id').isNumeric(),
@@ -125,9 +149,10 @@ module.exports = function (router) {
                 .then(() => {
                     res.status(200).json({message: "board deleted", target: board})
                 })
+                .error(databaseErrorMessage(res))
             }
             else {
-                res.status(404).json({message: "no board id " + req.params.post_id})
+                res.status(404).json({message: "no board id " + req.params.board_id})
             }
         })
         .catch(databaseErrorMessage(res))
@@ -150,6 +175,41 @@ module.exports = function (router) {
         })
     })
 
+
+    router.patch('/post/:post_id', [
+        loginRequired,
+        param('post_id').isNumeric(),
+        param('title').isString(),
+        param('content').isString(),
+        validateParams
+    ], function (req, res) {
+        Post.findById(req.params.post_id)
+        .then((post) => {
+            if (post) {
+                if (post.writer === req.user.username || req.user.isAdmin) {
+                    if (req.body.title) {
+                        post.title = req.body.title
+                    }
+                    if (req.body.content) {
+                        post.content = req.body.content
+                    }
+                    post.save()
+                    .then(() => {
+                        res.status(200).json({message: "post edited", target: post})
+                    })
+                    .catch(databaseErrorMessage(res))
+                }
+                else {
+                    res.status(403).json({message: "you have no permission to edit this post"})
+                }
+            }
+            else {
+                res.status(404).json({message: "no post id " + req.params.post_id})
+            }
+        })
+        .catch(databaseErrorMessage(res))
+    })
+
     
     router.delete('/post/:post_id', [
         loginRequired,
@@ -159,7 +219,7 @@ module.exports = function (router) {
         Post.findById(req.params.post_id)
         .then((post) => {
             if (post) {
-                if (post.writer == req.user.username || req.user.isAdmin) {
+                if (post.writer === req.user.username || req.user.isAdmin) {
                     post.delete()
                     .then(() => {
                         res.status(200).json({message: "post deleted", target: post})
