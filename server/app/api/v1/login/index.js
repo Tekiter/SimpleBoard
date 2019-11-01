@@ -1,4 +1,4 @@
-const { check, validationResult } = require('express-validator');
+const { check, body, param, query } = require('express-validator')
 const { validateParams } = require.main.require('./app/util/api')
 const session = require.main.require('./app/util/session')
 const User = require.main.require('./app/model/user')
@@ -6,8 +6,8 @@ const User = require.main.require('./app/model/user')
 module.exports = function (router) {
 
     router.post('/login', [
-        check('username').exists(),
-        check('password').exists(),
+        body('username').exists(),
+        body('password').exists(),
         validateParams
     ],
      function (req, res) {
