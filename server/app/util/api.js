@@ -17,3 +17,9 @@ module.exports.validateJson = function (req, res, next) {
     }
     
 }
+
+module.exports.databaseErrorMessage = function (res) {
+    return function (err) {
+        res.status(503).json({ message: "database error" })
+    }
+}
