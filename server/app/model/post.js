@@ -26,8 +26,8 @@ const postSchema = new mongoose.Schema({
     },
     comments: [
         {
-            content: { type: String },
-            writer: { type: String }
+            content: { type: String, required: [true, 'comment content required'] },
+            writer: { type: String, required: [true, 'comment writer required'] }
         }
     ],
     likes: [
