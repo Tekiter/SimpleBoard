@@ -34,7 +34,11 @@ const postSchema = new mongoose.Schema({
         {
             liker: { type: String }
         }
-    ]
+    ],
+    created: {
+        type: Date,
+        default: Date.now
+    }
     
 })
 
