@@ -61,7 +61,7 @@ module.exports = function (router) {
 
             Post.find()
             .where('board').equals(boardId)
-            .select('_id title writer')
+            .select('_id title writer likes_count comments_count')
             .then((posts) => {
                 
                 res.status(200).json({
@@ -87,9 +87,8 @@ module.exports = function (router) {
         const boardId = parseInt(req.params.board_id)
 
         // Board.findOne({_id: boardId})
-        Board.find()
+        Board.findOne()
         .where('_id').equals(boardId)
-        .findOne()
         .then((board) => {
             
             const post = new Post({
@@ -118,9 +117,8 @@ module.exports = function (router) {
         check('post_id').isNumeric(),
         validateParams
     ], function (req, res) {
-        Post.find()
+        Post.findOne()
         .where('_id').equals(req.params.post_id)
-        .findOne()
         .then((post) => {
             res.status(200).json(post)
         })

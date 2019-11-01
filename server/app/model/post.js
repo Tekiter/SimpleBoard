@@ -42,6 +42,18 @@ const postSchema = new mongoose.Schema({
     
 })
 
+postSchema.set('toObject', { virtuals: true })
+postSchema.set('toJSON', { virtuals: true })
+
+postSchema.virtual('likes_count').get(function() {
+    
+    return this.likes ? this.likes.length : 0
+})
+
+postSchema.virtual('comments_count').get(function() {
+    return this.comments ? this.comments.length : 0
+})
+
 postSchema.plugin(autoIncrement.plugin, {
     model: 'post',
     startAt: 1
