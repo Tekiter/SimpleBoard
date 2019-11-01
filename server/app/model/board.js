@@ -1,4 +1,5 @@
 const mongoose = require('mongoose')
+const autoIncrement = require('mongoose-auto-increment')
 
 const boardSchema = new mongoose.Schema({
     name: {
@@ -16,5 +17,8 @@ const boardSchema = new mongoose.Schema({
 
 })
 
-
+boardSchema.plugin(autoIncrement.plugin, {
+    model: 'board',
+    startAt: 1
+})
 module.exports = mongoose.model('board', boardSchema)

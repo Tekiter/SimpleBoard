@@ -1,6 +1,6 @@
 
 const { check, validateJson } = require.main.require('./app/util/api')
-const { adminRequired } = require.main.require('./app/util/session')
+const { adminRequired, loginRequired } = require.main.require('./app/util/session')
 const session = require.main.require('./app/util/session')
 const User = require.main.require('./app/model/user')
 const Board = require.main.require('./app/model/board')
@@ -27,6 +27,10 @@ module.exports = function (router) {
         adminRequired,
         check('name').isString()
     ], function (req, res) {
+        if (!validateJson(req, res)) {
+            return
+        }
+
         const board = new Board({
             name: req.body.name,
             owner: req.user.username
@@ -40,7 +44,58 @@ module.exports = function (router) {
         })
     })
 
-    router.post('/board/:id', [
+    router.get('/board/:board_id', [
 
-    ])
+    ], function (req, res) {
+        const boardId = parseInt(req.params.board_id)
+
+        Board.findOne({_id: boardId})
+        .then((board) => {
+            res.json(board)
+        })
+        .catch((err) => {
+            console.log(err)
+            res.json({message:"???"})
+        })
+
+    })
+
+    router.post('/board/:board_id', [
+        loginRequired,
+        check('title').isString(),
+        check('content').isString(),
+        validateJson
+    ], function (req, res) {
+        
+        
+        const boardId = parseInt(req.params.board_id)
+
+        // Board.findOne({_id: boardId})
+        Board.find()
+        .where('_id').equals(boardId)
+        .then((board) => {
+            
+            const post = new Post({
+                board: boardId,
+                title: req.body.title,
+                content: req.body.content,
+                writer: req.user.username
+            })
+            
+            
+            post.save()
+            .then((newpost) => {
+                res.status(201).json(newpost)
+            })
+            .catch((err) => {
+                console.log(err)
+                res.status(503).json(err)
+            })
+        })
+        .catch((err) => {
+            // res.status(404).json(err)
+            
+            res.status(404).json({message:"no board id "+boardId})
+        })
+    })
 }

@@ -1,9 +1,10 @@
 const mongoose = require('mongoose')
 const Types = mongoose.Schema.Types
+const autoIncrement = require('mongoose-auto-increment')
 
 const postSchema = new mongoose.Schema({
     board: {
-        type: Types.ObjectId,
+        type: Number,
         ref: 'board'
     },
     title: {
@@ -37,5 +38,8 @@ const postSchema = new mongoose.Schema({
     
 })
 
-
+postSchema.plugin(autoIncrement.plugin, {
+    model: 'post',
+    startAt: 1
+})
 module.exports = mongoose.model('post', postSchema)
