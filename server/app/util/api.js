@@ -3,7 +3,7 @@ const { check, validationResult } = require('express-validator');
 
 module.exports.check = check
 
-module.exports.validateJson = function (req, res, next) {
+module.exports.validateParams = function (req, res, next) {
     const errors = validationResult(req)
     if (!errors.isEmpty()) {
         res.status(400).json({ errors: errors.array() })

@@ -1,5 +1,5 @@
 
-const { check, validateJson, databaseErrorMessage } = require.main.require('./app/util/api')
+const { check, validateParams, databaseErrorMessage } = require.main.require('./app/util/api')
 const { adminRequired, loginRequired } = require.main.require('./app/util/session')
 const session = require.main.require('./app/util/session')
 const User = require.main.require('./app/model/user')
@@ -28,7 +28,7 @@ module.exports = function (router) {
         adminRequired,
         check('name').isString()
     ], function (req, res) {
-        if (!validateJson(req, res)) {
+        if (!validateParams(req, res)) {
             return
         }
 
@@ -48,7 +48,7 @@ module.exports = function (router) {
 
     router.get('/board/:board_id', [
         check('board_id').isNumeric(),
-        validateJson
+        validateParams
     ], function (req, res) {
         const boardId = parseInt(req.params.board_id)
 
@@ -81,7 +81,7 @@ module.exports = function (router) {
         check('board_id').isNumeric(),
         check('title').isString(),
         check('content').isString(),
-        validateJson
+        validateParams
     ], function (req, res) {
         
         const boardId = parseInt(req.params.board_id)
@@ -116,7 +116,7 @@ module.exports = function (router) {
 
     router.get('/post/:post_id', [
         check('post_id').isNumeric(),
-        validateJson
+        validateParams
     ], function (req, res) {
         Post.find()
         .where('_id').equals(req.params.post_id)
