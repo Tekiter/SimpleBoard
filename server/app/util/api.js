@@ -20,6 +20,7 @@ module.exports.validateParams = function (req, res, next) {
 
 module.exports.databaseErrorMessage = function (res) {
     return function (err) {
+        console.error(err)
         res.status(503).json({ message: "database error" })
     }
 }
