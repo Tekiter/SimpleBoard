@@ -239,20 +239,50 @@ module.exports = function (router) {
     })
 
 
-    // router.post('/post/:post_id/comment', [
-    //     check('post_id').isNumeric(),
-    //     check('content').isString(),
-    //     validateParams
-    // ], function (req, res) {
-    //     Post.findOne()
-    //     .where('_id').equals(req.params.post_id)
-    //     .then((post) => {
-    //         if (!post) {
-    //             res.status(404).json({message:"no post id " + req.params.post_id})
-    //             return
-    //         }
+    router.post('/post/:post_id/comment', [
+        loginRequired,
+        param('post_id').isNumeric(),
+        body('content').isString(),
+        validateParams
+    ], function (req, res) {
+        Post.findOne()
+        .where('_id').equals(req.params.post_id)
+        .then((post) => {
+            if (!post) {
+                res.status(404).json({message:"no post id " + req.params.post_id})
+                return
+            }
 
-            
-    //     })
-    // })
+            post.addComment(req.body.content, req.user.username)
+            .then(() => {
+                res.status(201).json({message:"comment created"})
+            })
+            .catch(databaseErrorMessage(res))
+        })
+        .catch(databaseErrorMessage(res))
+    })
+
+
+    router.delete('/post/:post_id/comment/:comment_id', [
+        loginRequired,
+        param('post_id').isNumeric(),
+        param('comment_id').isNumeric(),
+        validateParams
+    ], function (req, res) {
+        Post.findOne()
+        .where('_id').equals(req.params.post_id)
+        .then((post) => {
+            if (!post) {
+                res.status(404).json({message:"no post id " + req.params.post_id})
+                return
+            }
+
+            post.removeComment(req.params.comment_id)
+            .then(() => {
+                res.status(200).json({message:"comment removed"})
+            })
+            .catch(databaseErrorMessage(res))
+        })
+        .catch(databaseErrorMessage(res))
+    })
 }
