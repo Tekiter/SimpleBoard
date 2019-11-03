@@ -4,21 +4,7 @@ import VueRouter from 'vue-router'
 Vue.use(VueRouter)
 
 const routes = [
-  {
-    path: '/:board_id',
-    name: 'board',
-    component: () => import('../views/Home.vue'),
-    children: [
-      {
-        path: '',
-        component: () => import('../components/board/postlist.vue')
-      },
-      {
-        path: ':post_id',
-        component: () => import('../components/board/postview.vue')
-      }
-    ]
-  },
+  
   {
     path: '/login',
     name: 'login',
@@ -36,7 +22,27 @@ const routes = [
     // this generates a separate chunk (about.[hash].js) for this route
     // which is lazy-loaded when the route is visited.
     component: () => import(/* webpackChunkName: "about" */ '../views/About.vue')
-  }
+  },
+  {
+    path: '/:board_id',
+    name: 'board',
+    component: () => import('../views/Home.vue'),
+    children: [
+      {
+        path: '',
+        component: () => import('../components/board/postlist.vue')
+      },
+      {
+        path: 'write',
+        component: () => import('../components/board/postwrite.vue')
+      },
+      {
+        path: ':post_id',
+        component: () => import('../components/board/postview.vue')
+      }
+      
+    ]
+  },
 ]
 
 const router = new VueRouter({
