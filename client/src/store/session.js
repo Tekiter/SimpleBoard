@@ -26,6 +26,7 @@ export default {
     
                 if (res.data.access_token) {
                     localStorage.setItem('access_token', res.data.access_token)
+                    axios.defaults.headers.common['Authorization'] = `JWT ${res.data.access_token}`
                     context.commit('SET_ACCESS_TOKEN', res.data.access_token)
                     return
                 }
@@ -36,7 +37,8 @@ export default {
             }
         },
         logout() {
-            localStorage.setItem('accessToken', null)
+            localStorage.removeItem('accessToken')
+            delete axios.defaults.headers.common['Authorization']
             context.commit('SET_ACCESS_TOKEN', null)
         }
     },
