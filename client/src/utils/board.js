@@ -12,6 +12,10 @@ const board = {
     async getBoard(board_id) {
         const res = await axios.get(`/board/${board_id}`)
         return res.data
+    },
+    async getPost(post_id) {
+        const res = await axios.get(`/post/${post_id}`)
+        return res.data
     }
 }
 
