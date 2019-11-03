@@ -11,6 +11,8 @@
 
 </style>
 <script>
+import boardUtil from "../../utils/board"
+
 export default {
     data() {
         return {
@@ -20,15 +22,15 @@ export default {
     methods: {
         async updateBoardList() {
             try {
-                const res = await this.$http.get('/board')
-                this.boards = res.data.boards
+                const board = await boardUtil.getBoardList()
+                this.boards = board
             } catch (error) {
                 console.log(error)
             }
         }
     },
-    mounted() {
-        this.updateBoardList()
+    async mounted() {
+        await this.updateBoardList()
     }
 }
 </script>
