@@ -1,7 +1,11 @@
 <template>
   <div class="container">
-    <boardlist></boardlist>
-    <router-view></router-view>
+    <div class="d-flex mt-4">
+      <boardlist></boardlist>
+      <router-view class="flex-grow-1"></router-view>
+    </div>
+    
+    
     <!-- <board></board> -->
   </div>
 </template>
