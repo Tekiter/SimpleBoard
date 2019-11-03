@@ -6,7 +6,7 @@ Vue.use(VueRouter)
 const routes = [
   {
     path: '/:board_id',
-    name: 'home',
+    name: 'board',
     component: () => import('../views/Home.vue'),
     children: [
       {
