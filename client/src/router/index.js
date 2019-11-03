@@ -1,14 +1,23 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
-import Home from '../views/Home.vue'
 
 Vue.use(VueRouter)
 
 const routes = [
   {
-    path: '/',
+    path: '/:board_id',
     name: 'home',
-    component: Home
+    component: () => import('../views/Home.vue'),
+    children: [
+      {
+        path: '',
+        component: () => import('../components/board/postlist.vue')
+      },
+      {
+        path: ':post_id',
+        component: () => import('../components/board/postview.vue')
+      }
+    ]
   },
   {
     path: '/login',
