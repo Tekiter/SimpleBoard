@@ -2,7 +2,10 @@
   <div class="container">
     <div class="d-flex mt-4">
       <boardlist></boardlist>
-      <router-view class="flex-grow-1"></router-view>
+      <div class="flex-grow-1 card p-4 ml-3">
+        <router-view></router-view>
+      </div>
+      
     </div>
     
     
