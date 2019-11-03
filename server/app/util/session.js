@@ -2,7 +2,7 @@ const jwt = require('jsonwebtoken')
 
 const admin_permission = 100
 
-module.exports = {
+const session = {
     createToken(user) {
         let token = jwt.sign({
             username: user.username,
@@ -27,7 +27,7 @@ module.exports = {
         if (req.headers && req.headers.authorization) {
             let splittoken = req.headers.authorization.split(' ')
             if (splittoken[0] == 'JWT') {
-                module.exports.checkToken(splittoken[1])
+                session.checkToken(splittoken[1])
                 .then(function (decoded) {
                     req.user = decoded
                     req.user.isAdmin = (req.user.permission_level >= admin_permission)
@@ -43,7 +43,7 @@ module.exports = {
     },
     adminRequired(req, res, next) {
 
-        module.exports.loginRequired(req, res, function() {
+        session.loginRequired(req, res, function() {
             if (req.user.permission_level < admin_permission) {
                 res.status(403).json({"message": "admin permission required"})
             }
@@ -53,3 +53,6 @@ module.exports = {
         })
     }
 }
+
+
+module.exports = session
