@@ -1,7 +1,7 @@
 <template>
   <div class="container">
     <div class="d-flex mt-4">
-      <boardlist @addBoard="$bvModal.show('add-board-modal')"></boardlist>
+      <boardlist class="boardlist" @addBoard="$bvModal.show('add-board-modal')"></boardlist>
       <div class="flex-grow-1 card p-4 ml-3">
         <router-view></router-view>
       </div>
@@ -17,7 +17,11 @@
     </b-modal>
   </div>
 </template>
-
+<style scoped>
+.boardlist {
+  min-width: 15em
+}
+</style>
 <script>
 import board from '@/components/board/board.vue'
 import boardlist from '@/components/board/boardlist.vue'
