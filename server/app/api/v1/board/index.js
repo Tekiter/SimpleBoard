@@ -61,6 +61,7 @@ module.exports = function (router) {
 
             Post.find()
             .where('board').equals(boardId)
+            .sort('-_id')
             .select('_id title writer likes_count comments_count')
             .then((posts) => {
                 
