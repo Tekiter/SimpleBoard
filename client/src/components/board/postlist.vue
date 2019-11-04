@@ -1,6 +1,9 @@
 <template>
     <div>
-        <h3>{{ boardInfo.name }}</h3>
+        <div>
+            <h3 class="float-left">{{ boardInfo.name }}</h3>
+            <b-button class="float-right" @click="onWrite">write</b-button>
+        </div>
         <b-table :items="posts" :fields="fields" select-mode="single" selectable
                     @row-selected="onClick"></b-table>
     </div>
@@ -33,6 +36,9 @@ export default {
         onClick(post) {
             console.log(post)
             this.$router.push({ path: `/${this.boardInfo._id}/${post[0]._id}`})
+        },
+        onWrite() {
+            this.$router.push({ path: `/${this.$route.params.board_id}/write` })
         }
     }
 }
