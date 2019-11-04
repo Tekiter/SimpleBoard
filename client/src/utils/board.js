@@ -13,6 +13,10 @@ const board = {
         const res = await axios.get(`/board/${board_id}`)
         return res.data
     },
+    async addBoard({name}) {
+        const res = await axios.post('/board', {name})
+        return res.data
+    },
     async getPost(post_id) {
         const res = await axios.get(`/post/${post_id}`)
         return res.data
