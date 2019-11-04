@@ -24,6 +24,10 @@ const board = {
     async writePost({title, content, board_id}) {
         const res = await axios.post(`/board/${board_id}`, {title, content})
         return res.data
+    },
+    async writeComment({ content, post_id }) {
+        const res = await axios.post(`/post/${post_id}/comment`, {content})
+        return res.data
     }
 }
 
