@@ -1,7 +1,8 @@
 <template>
     <div>
         <b-list-group>
-            <b-list-group-item v-for="board in boards" :key="board._id" :to="{path: `/${board._id}`}">
+            <b-list-group-item v-for="board in boards" :key="board._id" :to="{path: `/${board._id}`}"
+                                :active="board._id == $route.params.board_id">
                 {{ board.name }}
             </b-list-group-item>
         </b-list-group>

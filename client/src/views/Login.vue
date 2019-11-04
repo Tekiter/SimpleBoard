@@ -52,7 +52,7 @@ export default {
 
                 const res = await this.$store.dispatch('login', {username:this.username, password:this.password})
                 
-                this.$router.push('/home')
+                this.$router.push('/')
             }
             catch (err) {
                 this.is_error = true
