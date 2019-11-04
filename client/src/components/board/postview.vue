@@ -10,7 +10,9 @@
             </p>
         </div>
         <div class="mt-3 d-flex flex-row-reverse">
-            <b-button :to="{path: `/${$route.params.board_id}`}">List</b-button>
+            <b-button :to="{path: `/${$route.params.board_id}`}"><i class="fas fa-list"></i></b-button>
+            <b-button @click="onDelete"><i class="fas fa-trash-alt"></i></b-button>
+            <b-button><i class="fas fa-edit"></i></b-button>
         </div>
         <div class="mt-3">
             <b-list-group>
@@ -30,6 +32,7 @@
                 <b-button @click="onCommentWrite" variant="primary">Write</b-button>
             </div>
         </div>
+
     </div>
 </template>
 <style scoped>
@@ -63,6 +66,24 @@ export default {
                 
             } catch (error) {
                 console.log(error)
+            }
+        },
+        async onDelete() {
+            
+            const ans = await this.$bvModal.msgBoxConfirm('Are you sure want to delete this post?', {
+                title: 'Delete post',
+                // size: 'sm',
+                // buttonSize: 'sm',
+                okVariant: 'danger',
+                okTitle: 'Delete',
+                cancelTitle: 'Cancel',
+                footerClass: 'p-2',
+                hideHeaderClose: false,
+                // centered: true
+            })
+
+            if (ans) {
+                alert(1)
             }
         }
     },
