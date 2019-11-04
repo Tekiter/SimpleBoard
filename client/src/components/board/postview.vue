@@ -1,19 +1,22 @@
 <template>
     <div>
-        <div>
-            <h3>{{ post.title }}</h3>
+        <div class="d-flex">
+            <h3 class="flex-grow-1">{{ post.title }}</h3>
             <p>{{ post.writer }}</p>
         </div>
-        <div>
+        <div class="mt-2 p-3 bg-light">
             <p>
                 {{ post.content }}
             </p>
         </div>
-        <div>
+        <div class="mt-3 d-flex flex-row-reverse">
+            <b-button :to="{path: `/${$route.params.board_id}`}">List</b-button>
+        </div>
+        <div class="mt-3">
             <b-list-group>
                 <b-list-group-item v-for="comment in post.comments" :key="comment._id">
                     <div class="d-flex">
-                        <p class="flex-grow-1">
+                        <p class="flex-grow-1 text-break mr-3">
                             {{ comment.content }}
                         </p>
                         <p>
@@ -24,10 +27,9 @@
             </b-list-group>
             <div class="d-flex mt-3">
                 <b-textarea class="flex-grow-1 mr-1" v-model="commentContent" placeholder="comment..."></b-textarea>
-                <b-button @click="onCommentWrite">Write</b-button>
+                <b-button @click="onCommentWrite" variant="primary">Write</b-button>
             </div>
         </div>
-
     </div>
 </template>
 <style scoped>
