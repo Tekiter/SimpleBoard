@@ -5,6 +5,9 @@
                                 :active="board._id == $route.params.board_id">
                 {{ board.name }}
             </b-list-group-item>
+            <b-list-group-item @click="$emit('addBoard')" button>
+                Add board...
+            </b-list-group-item>
         </b-list-group>
     </div>
 </template>
