@@ -36,7 +36,14 @@ export default {
                 throw err
             }
         },
-        logout() {
+        restoreLogin(context) {
+            const token = localStorage.getItem('access_token')
+            if (token) {
+                context.commit('SET_ACCESS_TOKEN', token)
+                axios.defaults.headers.common['Authorization'] = `JWT ${token}`
+            }
+        },
+        logout(context) {
             localStorage.removeItem('accessToken')
             delete axios.defaults.headers.common['Authorization']
             context.commit('SET_ACCESS_TOKEN', null)
