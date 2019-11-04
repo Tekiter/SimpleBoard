@@ -27,9 +27,7 @@ export default {
         }
     },
     async mounted() {
-        const board = await boardUtil.getBoard(this.$route.params.board_id)
-        this.boardInfo = board.board
-        this.posts = board.posts
+        await this.getBoard(this.$route.params.board_id)
 
     },
     methods: {
@@ -39,7 +37,24 @@ export default {
         },
         onWrite() {
             this.$router.push({ path: `/${this.$route.params.board_id}/write` })
+        },
+        async getBoard(board_id) {
+            try {
+                const board = await boardUtil.getBoard(board_id)
+                this.boardInfo = board.board
+                this.posts = board.posts
+            }
+            catch (error) {
+                console.log(error)
+            }
         }
+        
+    },
+    watch: {
+        async '$route'(to, from) {
+            await this.getBoard(to.params.board_id)
+        }
+        
     }
 }
 </script>
