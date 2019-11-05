@@ -1,5 +1,6 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
+import store from '@/store'
 import boardUtil from '@/utils/board'
 
 Vue.use(VueRouter)
@@ -51,7 +52,8 @@ const routes = [
       },
       {
         path: 'write',
-        component: () => import('../components/board/postwrite.vue')
+        component: () => import('../components/board/postwrite.vue'),
+        meta: { loginRequired: true }
       },
       {
         path: ':post_id',
@@ -72,5 +74,23 @@ const router = new VueRouter({
   base: process.env.BASE_URL,
   routes
 })
+
+
+router.beforeEach((to, from, next) => {
+  if (to.matched.some(record => record.meta.loginRequired)) {
+    console.log('here')
+    if (!store.getters.isLoggedIn) {
+      next({
+        path: '/login',
+        query: { redirect: to.fullPath }
+      })
+    } else {
+      next()
+    }
+  } else {
+    next()
+  }
+})
+
 
 export default router
