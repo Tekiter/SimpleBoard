@@ -2,7 +2,7 @@
     <div>
         <div>
             <h3 class="float-left">{{ boardInfo.name }}</h3>
-            <b-button class="float-right" @click="onWrite" variant="outline-success">write</b-button>
+            <b-button class="float-right" @click="onWrite" variant="outline-success"><i class="fas fa-pen"></i></b-button>
         </div>
         <b-table :items="posts" :fields="fields" select-mode="single" selectable
                     @row-selected="onClick"></b-table>
