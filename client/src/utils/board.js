@@ -25,6 +25,10 @@ const board = {
         const res = await axios.post(`/board/${board_id}`, {title, content})
         return res.data
     },
+    async deletePost({ post_id }) {
+        const res = await axios.delete(`/post/${post_id}`)
+        return res.data
+    },
     async writeComment({ content, post_id }) {
         const res = await axios.post(`/post/${post_id}/comment`, {content})
         return res.data
