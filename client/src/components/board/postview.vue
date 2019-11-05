@@ -13,7 +13,7 @@
             <b-button-group>
                 <b-button :to="{path: `/${$route.params.board_id}`}" variant="info"><i class="fas fa-list"></i></b-button>
                 <b-button @click="onDelete" variant="danger"><i class="fas fa-trash-alt"></i></b-button>
-                <b-button ><i class="fas fa-edit"></i></b-button>
+                <b-button ><i class="fas fa-pen"></i></b-button>
 
             </b-button-group>
         </div>
