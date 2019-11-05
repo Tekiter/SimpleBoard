@@ -10,9 +10,12 @@
             </p>
         </div>
         <div class="mt-3 d-flex flex-row-reverse">
-            <b-button :to="{path: `/${$route.params.board_id}`}"><i class="fas fa-list"></i></b-button>
-            <b-button @click="onDelete"><i class="fas fa-trash-alt"></i></b-button>
-            <b-button><i class="fas fa-edit"></i></b-button>
+            <b-button-group>
+                <b-button :to="{path: `/${$route.params.board_id}`}" variant="info"><i class="fas fa-list"></i></b-button>
+                <b-button @click="onDelete" variant="danger"><i class="fas fa-trash-alt"></i></b-button>
+                <b-button ><i class="fas fa-edit"></i></b-button>
+
+            </b-button-group>
         </div>
         <div class="mt-3">
             <b-list-group>
@@ -83,7 +86,17 @@ export default {
             })
 
             if (ans) {
-                alert(1)
+                try {
+                    const res = await boardUtil.deletePost({ post_id: this.$route.params.post_id })
+                    await this.$bvModal.msgBoxOk('Successfully deleted post')
+                    
+                    this.$router.push({ path: `/${this.$route.params.board_id}` })
+                
+                } catch (error) {
+                    console.log(error)
+                    await this.$bvModal.msgBoxOk('Cannot delete post')
+                }
+
             }
         }
     },
