@@ -50,6 +50,8 @@ export default {
         }
     },
     getters: {
-        
+        isLoggedIn(state, getters) {
+            return !!state.accessToken
+        }
     }
 }
