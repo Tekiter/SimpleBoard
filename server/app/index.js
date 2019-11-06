@@ -17,6 +17,8 @@ const db = mongoose.connection
 db.on('error', console.error)
 db.once('open', function () {
     console.log("Successfully connected to Mongo")
+
+    require('./util/initialization')()
 })
 
 mongoose.connect(process.env.DB_URI, { useNewUrlParser: true, useUnifiedTopology: true })
@@ -24,7 +26,7 @@ mongoose.connect(process.env.DB_URI, { useNewUrlParser: true, useUnifiedTopology
 autoIncrement.initialize(mongoose.connection)
 
 
-require('./util/initialization')()
+
 
 
 app.use(cors())
