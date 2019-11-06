@@ -87,7 +87,6 @@ export default {
             }
             catch (err) {
                 let errres = err.response
-                console.log(errres)
                 if (errres.status == 400) {
                     this.errors = errres.data.errors
                 }
