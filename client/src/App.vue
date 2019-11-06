@@ -1,6 +1,6 @@
 <template>
   <div id="app">
-    
+    <top-nav></top-nav>
     <router-view/>
   </div>
 </template>
@@ -10,8 +10,12 @@
 
 </style>
 <script>
+import TopNav from './components/TopNav.vue'
 
 export default {
+  components: {
+    TopNav
+  },
   created() {
     
     this.$store.dispatch('restoreLogin')

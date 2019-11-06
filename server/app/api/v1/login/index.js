@@ -1,5 +1,5 @@
 const { check, body, param, query } = require('express-validator')
-const { validateParams } = require.main.require('./app/util/api')
+const { validateParams, databaseErrorMessage } = require.main.require('./app/util/api')
 const session = require.main.require('./app/util/session')
 const User = require.main.require('./app/model/user')
 
@@ -18,7 +18,11 @@ module.exports = function (router) {
 
             const token = session.createToken(user)
 
-            res.json({ message: 'login success', access_token: token })
+            res.json({ 
+                message: 'login success', 
+                access_token: token, 
+                username: user.username, 
+                permission_level: user.permission_level })
             return
             }
             
@@ -27,8 +31,6 @@ module.exports = function (router) {
             
             
         })
-        .catch((error) => {
-            res.status(503).json({ message: 'cannot connect to db' })
-        })
+        .catch(databaseErrorMessage(res))
     })
 }
